@@ -83,6 +83,19 @@ bash scripts/remote/prepare_data_disk.sh
 bash scripts/remote/bootstrap_a10040g.sh
 ```
 
+长时间安装建议放 tmux：
+
+```bash
+bash scripts/remote/run_training_bootstrap_tmux.sh
+tail -f /data/sdb/rl-posttrain/logs/infra_bootstrap.log
+```
+
+安装后检查训练环境：
+
+```bash
+bash scripts/remote/check_training_env.sh
+```
+
 只安装模型下载工具：
 
 ```bash

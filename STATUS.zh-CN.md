@@ -55,8 +55,8 @@ tail -80 /data/sdb/rl-posttrain/logs/download_qwen3-32b.log
 
 ## 下一步
 
-1. 等 `Qwen3-32B` 完整落盘，若有小文件失败，按 14B 的方式单文件补齐。
-2. 安装训练环境：`bash scripts/remote/bootstrap_a10040g.sh`
+1. 安装训练环境：`bash scripts/remote/run_training_bootstrap_tmux.sh`
+2. 等 `Qwen3-32B` 完整落盘，若有小文件失败，按 14B 的方式单文件补齐。
 3. 跑 8 卡通信测试：`torchrun --standalone --nproc_per_node=8 scripts/smoke/torch_all_reduce.py`
 4. 用 14B 先做 vLLM generate smoke。
 5. 再决定是否尝试 32B QLoRA/GRPO smoke。
