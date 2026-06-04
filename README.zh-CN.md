@@ -21,6 +21,8 @@
 
 ## 2. 目录约定
 
+硬规则：**所有工作文件都放在 `/data/sdb/rl-posttrain` 这块 2T 数据盘下**。`/root/rl-posttrain` 只是软链接，不存真实代码。
+
 ```bash
 /root/rl-posttrain                         # 代码软链接
 /data/sdb/rl-posttrain/code                # 真实代码目录
@@ -34,6 +36,12 @@
 ```
 
 所有大文件都放 `/data/sdb`，不要放根目录 `/`。
+
+如果不确定目录有没有跑偏，执行：
+
+```bash
+bash scripts/remote/enforce_single_disk_layout.sh
+```
 
 ## 3. 每次登录先做什么
 
