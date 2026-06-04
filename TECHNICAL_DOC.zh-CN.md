@@ -275,6 +275,12 @@ source /data/sdb/rl-posttrain/venvs/rl/bin/activate
 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
 ```
 
+只跑 one-step smoke：
+
+```bash
+TOTAL_TRAINING_STEPS=1 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
+```
+
 日志：
 
 ```bash
@@ -295,6 +301,12 @@ cd /root/rl-posttrain
 source configs/hardware/a100_8x40g_pcie.env
 source /data/sdb/rl-posttrain/venvs/rl/bin/activate
 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smoke.env
+```
+
+只跑 one-step smoke：
+
+```bash
+TOTAL_TRAINING_STEPS=1 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smoke.env
 ```
 
 32B 初始建议：

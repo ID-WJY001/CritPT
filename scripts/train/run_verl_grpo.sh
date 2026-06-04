@@ -12,6 +12,10 @@ source "${CONFIG}"
 mkdir -p "${CHECKPOINT_ROOT}/${RUN_NAME}" "${LOG_ROOT}"
 
 REWARD_PATH="$(pwd)/src/rl_posttrain/critpt/verl_reward.py"
+EXTRA_ARGS=()
+if [ -n "${TOTAL_TRAINING_STEPS:-}" ]; then
+  EXTRA_ARGS+=(trainer.total_training_steps="${TOTAL_TRAINING_STEPS}")
+fi
 
 python3 -m verl.trainer.main_ppo \
   algorithm.adv_estimator=grpo \
@@ -47,4 +51,5 @@ python3 -m verl.trainer.main_ppo \
   trainer.test_freq="${TEST_FREQ}" \
   trainer.total_epochs="${TOTAL_EPOCHS}" \
   trainer.default_local_dir="${CHECKPOINT_ROOT}/${RUN_NAME}" \
+  "${EXTRA_ARGS[@]}" \
   2>&1 | tee "${LOG_ROOT}/${RUN_NAME}.log"

@@ -164,6 +164,12 @@ source /data/sdb/rl-posttrain/venvs/rl/bin/activate
 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
 ```
 
+只跑 one-step smoke：
+
+```bash
+TOTAL_TRAINING_STEPS=1 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
+```
+
 32B stretch：
 
 ```bash
@@ -172,6 +178,12 @@ cd /root/rl-posttrain
 source configs/hardware/a100_8x40g_pcie.env
 source /data/sdb/rl-posttrain/venvs/rl/bin/activate
 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smoke.env
+```
+
+只跑 one-step smoke：
+
+```bash
+TOTAL_TRAINING_STEPS=1 bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smoke.env
 ```
 
 建议先跑 14B 小步闭环，把 reward、失败样本保存、数据合成分布控制跑顺，再扩大 32B。
