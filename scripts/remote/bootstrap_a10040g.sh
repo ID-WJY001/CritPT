@@ -25,11 +25,18 @@ source "${VENV}/bin/activate"
 
 uv pip install --python "${VENV}/bin/python" --upgrade pip setuptools wheel
 
-# CUDA 12.4 driver can run cu121/cu124 wheels. cu121 is often the safest PyTorch index.
-uv pip install --python "${VENV}/bin/python" --index-url https://download.pytorch.org/whl/cu121 \
-  torch torchvision torchaudio
+# CUDA 12.4 driver can run cu121 wheels. Install torch only; vision/audio are
+# unnecessary for this project and add fragile extra network index lookups.
+"${VENV}/bin/python" -m pip install \
+  --timeout 180 \
+  --retries 10 \
+  --index-url https://download.pytorch.org/whl/cu121 \
+  torch
 
-uv pip install --python "${VENV}/bin/python" -r requirements/remote.txt
+"${VENV}/bin/python" -m pip install \
+  --timeout 180 \
+  --retries 10 \
+  -r requirements/remote.txt
 
 if [ ! -d "${REPOS}/verl/.git" ]; then
   git clone https://github.com/verl-project/verl "${REPOS}/verl"
