@@ -49,6 +49,7 @@ fi
 # verl docs recommend installing from source. We install editable without deps
 # after the runtime deps above, so vLLM/Torch stay pinned by this environment.
 uv pip install --python "${VENV}/bin/python" --no-deps -e "${REPOS}/verl"
+uv pip install --python "${VENV}/bin/python" --no-deps -e .
 
 python - <<'PY'
 import torch

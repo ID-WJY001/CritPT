@@ -2,7 +2,7 @@
 
 这份文档是给你无痛接手当前机器和代码用的。先看它，不用在聊天记录里翻细节。
 
-当前进度见 [STATUS.zh-CN.md](STATUS.zh-CN.md)。
+当前进度见 [STATUS.zh-CN.md](STATUS.zh-CN.md)。完整技术 runbook 见 [TECHNICAL_DOC.zh-CN.md](TECHNICAL_DOC.zh-CN.md)。
 
 ## 1. 当前机器结论
 
@@ -134,7 +134,10 @@ PYTHONPATH=src python scripts/eval/eval_jsonl.py --data data/seeds/critpt_seed.j
 8 卡 NCCL smoke：
 
 ```bash
-torchrun --standalone --nproc_per_node=8 scripts/smoke/torch_all_reduce.py
+MASTER_ADDR=127.0.0.1 MASTER_PORT=29500 \
+torchrun --nnodes=1 --nproc_per_node=8 \
+  --master_addr=127.0.0.1 --master_port=29500 \
+  scripts/smoke/torch_all_reduce.py
 ```
 
 ## 5. 模型策略
@@ -178,13 +181,14 @@ bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smok
 bash scripts/train/run_openrlhf_grpo_qwen3_32b_smoke.sh
 ```
 
-这些训练脚本是启动模板，第一次真正跑之前需要先完成：
+这些训练脚本现在已经可以作为 smoke 启动入口。当前已完成：
 
-- PyTorch/vLLM/verl/OpenRLHF 安装
-- 模型下载
-- CritPT 数据转成框架需要的格式
+- PyTorch/vLLM/verl 安装
+- Qwen3-14B 与 Qwen3-32B 模型下载
+- CritPT seed 数据转 `verl` parquet
 - 8 卡 all-reduce smoke
-- vLLM 单次 generate smoke
+- Qwen3-14B vLLM generate smoke
+- Qwen3-32B vLLM generate smoke
 
 ## 7. tmux 使用
 
@@ -218,8 +222,6 @@ tmux new -s model-download
 
 ## 9. 当前下一步
 
-1. 远端安装模型下载依赖
-2. 下载 `Qwen/Qwen3-14B`
-3. 下载或尝试下载 `Qwen/Qwen3-32B`
-4. 跑模型 inventory 检查
-5. 装训练依赖并跑 torch all-reduce
+1. 先跑 `Qwen3-14B` 的 `verl` GRPO smoke，确认 rollout/reward/update/checkpoint 全链路。
+2. 扩大 synthetic 数据，加入数据 hash 和 worse-case 保存。
+3. 再尝试 `Qwen3-32B` 的保守 smoke，不把 32B 作为唯一保底。
