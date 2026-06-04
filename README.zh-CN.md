@@ -95,6 +95,12 @@ bash scripts/remote/download_models.sh qwen3-14b
 bash scripts/remote/download_models.sh qwen3-32b
 ```
 
+当前国内机器默认 `MODEL_PROVIDER=modelscope`，不自动跳 HF 全量下载。若某个小文件失败，优先用 ModelScope 单文件补齐；确认 HF 可用时再临时执行：
+
+```bash
+MODEL_PROVIDER=hf bash scripts/remote/download_models.sh qwen3-14b
+```
+
 查看模型状态：
 
 ```bash

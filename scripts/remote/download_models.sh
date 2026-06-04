@@ -6,16 +6,16 @@ source configs/hardware/a100_8x40g_pcie.env
 TARGET=${1:-all}
 MODELS_DIR=${RL_DATA_ROOT}/models
 LOG_DIR=${LOG_ROOT}
+MODEL_PROVIDER=${MODEL_PROVIDER:-modelscope}
 mkdir -p "${MODELS_DIR}" "${HF_HOME}" "${MODELSCOPE_CACHE}" "${LOG_DIR}"
 
 download_hf() {
   local model_id=$1
   local local_dir=$2
   echo "[download] hf ${model_id} -> ${local_dir}"
-  huggingface-cli download "${model_id}" \
+  hf download "${model_id}" \
     --local-dir "${local_dir}" \
-    --local-dir-use-symlinks False \
-    --resume-download
+    --max-workers 8
 }
 
 download_modelscope() {
@@ -43,11 +43,13 @@ download_one() {
 
   {
     date
-    if command -v modelscope >/dev/null 2>&1 || python - <<'PY' >/dev/null 2>&1
+    if [ "${MODEL_PROVIDER}" = "hf" ]; then
+      download_hf "${model_id}" "${local_dir}"
+    elif command -v modelscope >/dev/null 2>&1 || python - <<'PY' >/dev/null 2>&1
 import modelscope
 PY
     then
-      download_modelscope "${model_id}" "${local_dir}" || download_hf "${model_id}" "${local_dir}"
+      download_modelscope "${model_id}" "${local_dir}"
     else
       download_hf "${model_id}" "${local_dir}"
     fi
@@ -73,4 +75,3 @@ case "${TARGET}" in
     exit 2
     ;;
 esac
-
