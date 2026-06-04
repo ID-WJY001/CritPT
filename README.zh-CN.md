@@ -96,6 +96,8 @@ tail -f /data/sdb/rl-posttrain/logs/infra_bootstrap.log
 bash scripts/remote/check_training_env.sh
 ```
 
+第一版 base 环境不安装 DeepSpeed，避免在无 `nvcc` 镜像里源码构建拖慢。主线先走 `verl + FSDP/vLLM`；如果后面需要 OpenRLHF/DeepSpeed，再单独加一个可控环境。
+
 只安装模型下载工具：
 
 ```bash
