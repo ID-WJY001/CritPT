@@ -1,6 +1,6 @@
 # 当前状态
 
-更新时间：2026-06-05 02:50 CST
+更新时间：2026-06-05 03:30 CST
 
 ## 远端机器
 
@@ -27,6 +27,14 @@
   - tmux：`model-download-32b`
   - 日志：`/data/sdb/rl-posttrain/logs/download_qwen3-32b.log`
   - 路径：`/data/sdb/rl-posttrain/models/qwen3-32b`
+  - 当前大小：约 `26.7GB`
+  - 当前 `safetensors` 分片数：`3/17`
+  - `config.json` 已有，tokenizer 相关文件尚未完整落盘
+
+## 资源状态
+
+- 数据盘：`/data/sdb` 已用约 `55GB`，剩余约 `1.8T`
+- GPU：8 张 A100 当前均空闲，显存使用 `0 MiB`
 
 查看进度：
 
@@ -52,4 +60,3 @@ tail -80 /data/sdb/rl-posttrain/logs/download_qwen3-32b.log
 3. 跑 8 卡通信测试：`torchrun --standalone --nproc_per_node=8 scripts/smoke/torch_all_reduce.py`
 4. 用 14B 先做 vLLM generate smoke。
 5. 再决定是否尝试 32B QLoRA/GRPO smoke。
-
