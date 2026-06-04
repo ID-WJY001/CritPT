@@ -12,6 +12,7 @@ export HF_HOME=${ROOT}/models/hf_cache
 export HF_HUB_CACHE=${ROOT}/models/hf_cache/hub
 export MODELSCOPE_CACHE=${ROOT}/models/modelscope_cache
 export TORCH_HOME=${ROOT}/models/torch_cache
+export PIP_INDEX_URL=${PIP_INDEX_URL:-https://pypi.tuna.tsinghua.edu.cn/simple}
 
 mkdir -p "${ROOT}"/{venvs,logs,tmp,models,repos}
 
@@ -20,18 +21,19 @@ if ! command -v uv >/dev/null 2>&1; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
 
+rm -rf "${VENV}"
 uv venv --python 3.11 "${VENV}"
 source "${VENV}/bin/activate"
 
 uv pip install --python "${VENV}/bin/python" --upgrade pip setuptools wheel
 
-# CUDA 12.4 driver can run cu121 wheels. Install torch only; vision/audio are
-# unnecessary for this project and add fragile extra network index lookups.
+# Install torch from the regular PyPI wheel family via a China-friendly mirror.
+# The Linux torch 2.6.0 wheel pulls CUDA 12 runtime packages and works with the
+# node's 550 driver / CUDA 12.4 runtime.
 "${VENV}/bin/python" -m pip install \
   --timeout 180 \
   --retries 10 \
-  --index-url https://download.pytorch.org/whl/cu121 \
-  torch
+  torch==2.6.0
 
 "${VENV}/bin/python" -m pip install \
   --timeout 180 \
