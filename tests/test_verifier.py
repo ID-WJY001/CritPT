@@ -22,3 +22,16 @@ def test_symbolic_rejects_wrong_answer() -> None:
     result = verify_completion("<answer>p + 2</answer>", spec)
     assert not result.ok
 
+
+def test_symbolic_accepts_common_latex_fraction() -> None:
+    spec = VerifierSpec(
+        kind="symbolic",
+        expected="1-(16*p**2/75)/(1-8*p/5+64*p**2/75)",
+        variables=["p"],
+        numeric_tests=[{"p": 0.03}],
+    )
+    result = verify_completion(
+        r"<answer>1-\frac{\frac{16}{75}p^2}{1-\frac{8}{5}p+\frac{64}{75}p^2}</answer>",
+        spec,
+    )
+    assert result.ok

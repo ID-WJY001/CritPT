@@ -1,227 +1,72 @@
-# 8卡 A100 RL 后训练 Infra 接手手册
+# RL 后训练实验仓库
 
-这份文档是给你无痛接手当前机器和代码用的。先看它，不用在聊天记录里翻细节。
+这是一个面向 CritPT 风格科学题的 RL post-training 实验仓库。
 
-当前进度见 [STATUS.zh-CN.md](STATUS.zh-CN.md)。完整技术 runbook 见 [TECHNICAL_DOC.zh-CN.md](TECHNICAL_DOC.zh-CN.md)。
+目标任务是让模型阅读科学/数学背景题，生成可执行的 Python `answer()` 函数，并返回正确对象。仓库包含数据构造、reward 设计、GRPO 训练配置、rollout 检查、checkpoint 合并和官方风格评测脚本。
 
-## 1. 当前机器结论
+最重要的结论也放在前面：
 
-- SSH：`ssh -i ~/.ssh/id_ed25519 -p 22 root@36.139.133.196`
-- 机器：`8x NVIDIA A100-PCIE-40GB`
-- 拓扑：`PHB`，也就是 PCIe 互联，没有 NVLink/NVSwitch
-- 内存：约 `629GiB`
-- 系统盘：`/`，约 `788G`
-- 数据盘：`/data/sdb`，约 `2T`
-- 代码目录：`/data/sdb/rl-posttrain/code`，软链接为 `/root/rl-posttrain`
-- 模型/日志/checkpoint 根目录：`/data/sdb/rl-posttrain`
-
-这台机器适合：
-
-- 稳妥主线：`Qwen/Qwen3-14B` 做 CritPT-style SFT/GRPO/RL 闭环
-- 冲刺尝试：`Qwen/Qwen3-32B` 做 QLoRA/GRPO smoke
-- 不建议：全参 32B PPO/GRPO
-
-## 2. 目录约定
-
-硬规则：**所有工作文件都放在 `/data/sdb/rl-posttrain` 这块 2T 数据盘下**。`/root/rl-posttrain` 只是软链接，不存真实代码。
-
-```bash
-/root/rl-posttrain                         # 代码软链接
-/data/sdb/rl-posttrain/code                # 真实代码目录
-/data/sdb/rl-posttrain/models              # 模型权重
-/data/sdb/rl-posttrain/models/hf_cache     # Hugging Face cache
-/data/sdb/rl-posttrain/models/modelscope_cache
-/data/sdb/rl-posttrain/data                # 训练/评测数据
-/data/sdb/rl-posttrain/checkpoints         # checkpoint
-/data/sdb/rl-posttrain/logs                # 日志
-/data/sdb/rl-posttrain/venvs               # Python 环境
+```text
+训练和评测闭环可运行。
+模型在格式、长度控制和可执行 answer() 结构上有改善。
+后期 official-style V/E runs 的 official70 accuracy 仍为 0。
+主要瓶颈是数据/reward 与目标 benchmark 语义没有充分对齐。
 ```
 
-所有大文件都放 `/data/sdb`，不要放根目录 `/`。
+## 文档
 
-如果不确定目录有没有跑偏，执行：
+1. [docs/overview.zh-CN.md](docs/overview.zh-CN.md)：项目概览和结论。
+2. [docs/pipeline.zh-CN.md](docs/pipeline.zh-CN.md)：数据、reward、训练和评测流程。
+3. [docs/experiments.zh-CN.md](docs/experiments.zh-CN.md)：V/E 实验摘要。
+4. [docs/research_journey.zh-CN.md](docs/research_journey.zh-CN.md)：实验过程复盘。
+5. [docs/run_evidence.zh-CN.md](docs/run_evidence.zh-CN.md)：实验记录和复现边界。
+6. [docs/rl_diagnostics.zh-CN.md](docs/rl_diagnostics.zh-CN.md)：RL 指标和失败诊断。
+7. [artifacts/README.md](artifacts/README.md)：精选曲线和结果证据。
 
-```bash
-bash scripts/remote/enforce_single_disk_layout.sh
+## 仓库里有什么
+
+```text
+src/rl_posttrain/
+  critpt/              早期 schema、verifier、reward、eval 基础模块
+  critpt_synth/        合成题生成器、本地 verifier reward、V/E 数据逻辑
+  model_judge/         OpenAI-compatible LLM judge 客户端和 reward wrapper
+
+scripts/
+  data/                构造 V/E 训练数据
+  eval/                本地评测、官方风格评测、提交包分析
+  ops/                 远端运行、画图、merge、rollout 检查
+  remote/              GPU 机器初始化脚本
+  train/               SFT/GRPO 启动脚本
+
+configs/experiments/  每轮实验的 env 配置
+docs/                 项目说明
+artifacts/curated/    训练曲线和 summary
+tests/                生成器、verifier、judge wrapper 的单元测试
 ```
 
-## 3. 每次登录先做什么
+## 技术关键词
+
+- 模型：Qwen3-8B 为主
+- 训练：GRPO / verl / vLLM rollout
+- 数据：程序合成题、官方风格包装题、失败挖掘 hardcase、LLM teacher specs
+- reward：本地 final-answer verifier、语义代码 judge、LLM-as-a-judge
+- 监控：reward、advantage、KL、entropy、length、clip、rollout 样本
+- 评测：heldout synthetic test、官方 70 题风格评测
+
+## 本地复现
+
+本地单测不需要模型权重，也不需要 API key：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519 -p 22 root@36.139.133.196
-cd /root/rl-posttrain
-source configs/hardware/a100_8x40g_pcie.env
-df -h /data/sdb
-nvidia-smi
-tmux ls || true
+uv run pytest
 ```
 
-如果有训练正在跑，先进入对应 tmux：
+真正的远端训练需要 GPU 机器、模型权重和私有 API key。  
+复制 `.env.example` 到私有 `.env` 后再填密钥，不要提交 `.env`。
 
-```bash
-tmux attach -t model-download
-tmux attach -t rl
-```
+## 注意事项
 
-## 4. 已准备的脚本
-
-主机检查：
-
-```bash
-bash scripts/remote/check_host.sh
-```
-
-准备数据盘目录：
-
-```bash
-bash scripts/remote/prepare_data_disk.sh
-```
-
-安装基础 Python / PyTorch / 训练依赖：
-
-```bash
-bash scripts/remote/bootstrap_a10040g.sh
-```
-
-长时间安装建议放 tmux：
-
-```bash
-bash scripts/remote/run_training_bootstrap_tmux.sh
-tail -f /data/sdb/rl-posttrain/logs/infra_bootstrap.log
-```
-
-安装后检查训练环境：
-
-```bash
-bash scripts/remote/check_training_env.sh
-```
-
-第一版 base 环境不安装 DeepSpeed，避免在无 `nvcc` 镜像里源码构建拖慢。主线先走 `verl + FSDP/vLLM`；如果后面需要 OpenRLHF/DeepSpeed，再单独加一个可控环境。
-
-只安装模型下载工具：
-
-```bash
-bash scripts/remote/install_model_tools.sh
-source /data/sdb/rl-posttrain/venvs/model-tools/bin/activate
-```
-
-下载模型：
-
-```bash
-bash scripts/remote/download_models.sh qwen3-14b
-bash scripts/remote/download_models.sh qwen3-32b
-```
-
-当前国内机器默认 `MODEL_PROVIDER=modelscope`，不自动跳 HF 全量下载。若某个小文件失败，优先用 ModelScope 单文件补齐；确认 HF 可用时再临时执行：
-
-```bash
-MODEL_PROVIDER=hf bash scripts/remote/download_models.sh qwen3-14b
-```
-
-查看模型状态：
-
-```bash
-python scripts/remote/model_inventory.py
-```
-
-CritPT seed 数据和 verifier：
-
-```bash
-PYTHONPATH=src python scripts/data/make_seed_dataset.py --out data/seeds/critpt_seed.jsonl
-PYTHONPATH=src python scripts/eval/eval_jsonl.py --data data/seeds/critpt_seed.jsonl
-```
-
-8 卡 NCCL smoke：
-
-```bash
-MASTER_ADDR=127.0.0.1 MASTER_PORT=29500 \
-torchrun --nnodes=1 --nproc_per_node=8 \
-  --master_addr=127.0.0.1 --master_port=29500 \
-  scripts/smoke/torch_all_reduce.py
-```
-
-## 5. 模型策略
-
-当前模型下载优先级：
-
-1. `Qwen/Qwen3-14B`：主线，最稳，先拿到完整 RL 闭环
-2. `Qwen/Qwen3-32B`：stretch，先做加载/短上下文/QLoRA/GRPO smoke
-
-不要一开始就追求 32B 大 batch 或长上下文。A100 40G PCIe 上的初始限制：
-
-```bash
-max_prompt_length=512
-max_response_length=512
-num_generations=2
-vLLM tensor_parallel_size=8
-vLLM gpu_memory_utilization=0.35-0.45
-LoRA rank=16
-ZeRO stage=3
-```
-
-如果 32B OOM，立刻降级到 14B 主线，不要硬耗卡时。
-
-## 6. 训练入口
-
-14B verl GRPO 模板：
-
-```bash
-bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
-```
-
-32B verl smoke 模板：
-
-```bash
-bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_32b_grpo_verl_smoke.env
-```
-
-32B OpenRLHF QLoRA/GRPO smoke 模板：
-
-```bash
-bash scripts/train/run_openrlhf_grpo_qwen3_32b_smoke.sh
-```
-
-这些训练脚本现在已经可以作为 smoke 启动入口。当前已完成：
-
-- PyTorch/vLLM/verl 安装
-- Qwen3-14B 与 Qwen3-32B 模型下载
-- CritPT seed 数据转 `verl` parquet
-- 8 卡 all-reduce smoke
-- Qwen3-14B vLLM generate smoke
-- Qwen3-32B vLLM generate smoke
-
-## 7. tmux 使用
-
-新开任务：
-
-```bash
-tmux new -s rl
-```
-
-后台保持运行：按 `Ctrl-b`，再按 `d`。
-
-重新进入：
-
-```bash
-tmux attach -t rl
-```
-
-下载模型建议使用：
-
-```bash
-tmux new -s model-download
-```
-
-## 8. 风险和底线
-
-- 这台是 A100 PCIe 40G，不是 80G，也不是 SXM
-- 32B RL 是 stretch，不是保底
-- 保底成果应该放在 Qwen3-14B 或 Qwen3-8B 的完整闭环上
-- 所有训练日志、数据 hash、config、git commit 都要保留
-- 临时密码已经出现在聊天里，建议确认公钥可用后去平台重置/禁用密码登录
-
-## 9. 当前下一步
-
-1. 先跑 `Qwen3-14B` 的 `verl` GRPO smoke，确认 rollout/reward/update/checkpoint 全链路。
-2. 扩大 synthetic 数据，加入数据 hash 和 worse-case 保存。
-3. 再尝试 `Qwen3-32B` 的保守 smoke，不把 32B 作为唯一保底。
+- 不提交 API key、密码、私有 `.env`。
+- 不提交模型权重、checkpoint、完整 rollout dump、parquet 大数据。
+- 只保留精选曲线、summary 和文档。
+- 真实远端地址用 `<GPU_HOST>` 这类占位符表达。

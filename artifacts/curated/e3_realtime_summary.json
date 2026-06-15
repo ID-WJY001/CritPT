@@ -1,0 +1,95 @@
+{
+  "rows": 120,
+  "last_step": 120,
+  "critic/score/mean": {
+    "last": 0.09437499940395355,
+    "min": 0.029999999329447746,
+    "max": 0.17218750715255737,
+    "mean": 0.09105729199945926,
+    "panel": "reward"
+  },
+  "critic/rewards/mean": {
+    "last": 0.09437499940395355,
+    "min": 0.029999999329447746,
+    "max": 0.17218750715255737,
+    "mean": 0.09105729199945926,
+    "panel": "reward"
+  },
+  "critic/score/max": {
+    "last": 0.15000000596046448,
+    "min": 0.029999999329447746,
+    "max": 0.3499999940395355,
+    "mean": 0.16775000402703882,
+    "panel": "reward spread"
+  },
+  "critic/score/min": {
+    "last": 0.029999999329447746,
+    "min": 0.0,
+    "max": 0.15000000596046448,
+    "mean": 0.03141666621280213,
+    "panel": "reward spread"
+  },
+  "critic/rewards/max": {
+    "last": 0.15000000596046448,
+    "min": 0.029999999329447746,
+    "max": 0.3499999940395355,
+    "mean": 0.16775000402703882,
+    "panel": "reward spread"
+  },
+  "critic/rewards/min": {
+    "last": 0.029999999329447746,
+    "min": 0.0,
+    "max": 0.15000000596046448,
+    "mean": 0.03141666621280213,
+    "panel": "reward spread"
+  },
+  "actor/entropy": {
+    "last": 0.3057381510734558,
+    "min": 0.05392617732286453,
+    "max": 0.7166344523429871,
+    "mean": 0.2856822104503711,
+    "panel": "entropy"
+  },
+  "response_length/mean": {
+    "last": 70.625,
+    "min": 34.25,
+    "max": 112.0,
+    "mean": 68.38645833333334,
+    "panel": "response length"
+  },
+  "prompt_length/mean": {
+    "last": 1722.0,
+    "min": 1102.5,
+    "max": 2745.0,
+    "mean": 1756.1125,
+    "panel": "prompt length"
+  },
+  "actor/grad_norm": {
+    "last": 4.269396781921387,
+    "min": 0.0,
+    "max": 15.003705024719238,
+    "mean": 4.498762899978707,
+    "panel": "grad/lr"
+  },
+  "actor/lr": {
+    "last": 5e-07,
+    "min": 5e-07,
+    "max": 5e-07,
+    "mean": 4.99999999999999e-07,
+    "panel": "grad/lr"
+  },
+  "timing_s/step": {
+    "last": 384.2715364219912,
+    "min": 106.68844810100563,
+    "max": 384.2715364219912,
+    "mean": 144.28376299674989,
+    "panel": "timing"
+  },
+  "perf/total_num_tokens": {
+    "last": 28682.0,
+    "min": 18816.0,
+    "max": 44924.0,
+    "mean": 29191.983333333334,
+    "panel": "timing"
+  }
+}

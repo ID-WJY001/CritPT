@@ -6,6 +6,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.private_archive/
 
 # Large local/remote artifacts
 models/
@@ -16,14 +17,33 @@ outputs/
 wandb/
 hf_cache/
 ms_cache/
+data/generated/
+data/**/*.parquet
+data/**/*.arrow
+data/**/*.jsonl.gz
 *.safetensors
 *.bin
 *.pt
 *.pth
+*.ckpt
+
+# Full run artifacts are noisy and may include large rollout dumps.
+# Keep only curated, small evidence files in Git.
+artifacts/*
+!artifacts/README.md
+!artifacts/curated/
+!artifacts/curated/**
 
 # Local secrets
 .env
+.env.*
+!.env.example
 *.key
 *.pem
 id_*
 !*.pub
+*.log
+*.out
+
+# Remote/private machine notes
+docs/gpu_node.local.md

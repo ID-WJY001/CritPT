@@ -1,0 +1,14 @@
+{
+  "status": 200,
+  "headers": {
+    "X-Ratelimit-Limit": "10",
+    "X-Ratelimit-Remaining": "8",
+    "X-Ratelimit-Reset": "Sun Jun 14 2026 10:01:40 GMT+0000 (Coordinated Universal Time)"
+  },
+  "body": {
+    "accuracy": 0,
+    "timeout_rate": 0,
+    "server_timeout_count": 0,
+    "judge_error_count": 4
+  }
+}

@@ -1,7 +1,7 @@
 [project]
-name = "rl-posttrain-infra"
+name = "rl-posttrain-lab"
 version = "0.1.0"
-description = "Minimal infra for CritPT-style Qwen post-training on 8x A100/H100-class nodes."
+description = "CritPT-style Qwen post-training experiments with synthetic data, reward design, GRPO runs, and evaluation tooling."
 requires-python = ">=3.10"
 dependencies = [
   "sympy>=1.12",
@@ -14,9 +14,8 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = [".", "src"]
 
 [tool.ruff]
 line-length = 100
 target-version = "py310"
-

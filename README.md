@@ -1,74 +1,81 @@
-# RL Posttrain Infra
+# RL Post-Training Lab
 
-中文版接手手册见 [README.zh-CN.md](README.zh-CN.md).
+This repository contains a research-and-engineering project for post-training
+Qwen-style language models on CritPT-like scientific Python-answer tasks.
 
-This repo is the launchpad for a CritPT-style post-training project on a rented
-8-GPU node. The current target node is:
+The task format is code-centric: the model reads a scientific problem statement
+and returns an executable Python `answer()` function. The repository includes
+data generation code, reward functions, GRPO training configs, evaluation
+scripts, and selected training artifacts.
 
-- `8x NVIDIA A100-PCIE-40GB`
-- Ubuntu 22.04
-- Driver CUDA runtime 12.4
-- 629GiB RAM
-- System disk: 788G at `/`
-- Data disk: 2T at `/data/sdb`
+## Scope
 
-The machine is good enough for a serious 8B/14B RL closed loop and a cautious
-32B QLoRA/GRPO smoke run. Because it is PCIe-only (`PHB` topology, no
-NVLink/NVSwitch), full-parameter 32B RL is intentionally out of scope.
+- Built a full GRPO post-training loop with `verl`, vLLM rollouts, checkpoint
+  merge/eval scripts, and training metric visualization.
+- Implemented multiple data-generation paths: programmatic synthetic tasks,
+  official-style prompt wrappers, failure-mined hard cases, and LLM-generated
+  teacher specifications.
+- Implemented reward variants: local final-answer verification, semantic code
+  judging, length-aware shaping, strict final-answer judging, and LLM-as-a-judge
+  wrappers.
+- Ran iterative experiments from early V-series format/verifier training to
+  E-series LLM-judge training.
+- Analyzed why attractive training curves can still fail official evaluation:
+  reward hacking, synthetic-task mismatch, and placeholder-like answers.
 
-## Recommended Run Order
+## Result
 
-1. Prepare the data disk and workspace.
+The end-to-end training and evaluation pipeline is functional. The later
+official-style V/E runs improved formatting, length control, and executable
+`answer()` structure, but did not improve official70 accuracy. The main finding
+is that synthetic rewards and LLM-judge rewards need much tighter semantic
+alignment with the target benchmark; clean formatting alone is not sufficient.
 
-```bash
-bash scripts/remote/prepare_data_disk.sh
+## Repository Map
+
+```text
+src/rl_posttrain/
+  critpt/              Early schema, verifier, reward, and eval utilities
+  critpt_synth/        Synthetic task generators and local verifier rewards
+  model_judge/         OpenAI-compatible LLM judge clients and reward wrappers
+
+scripts/
+  data/                Dataset builders for V/E experiment families
+  eval/                Local and official-style evaluation scripts
+  ops/                 Remote run, plotting, merge, and inspection utilities
+  remote/              GPU-node bootstrap helpers
+  train/               SFT/GRPO launchers
+
+configs/experiments/  Reproducible env configs for each experiment
+docs/                 Project overview, pipeline, and experiment summary
+artifacts/curated/    Selected training curves and summaries
+tests/                Unit tests for generators, verifiers, and judge plumbing
 ```
 
-2. Check the host.
+## Key Documents
+
+- [Overview](docs/overview.zh-CN.md)
+- [Pipeline](docs/pipeline.zh-CN.md)
+- [Experiment summary](docs/experiments.zh-CN.md)
+- [Research journey](docs/research_journey.zh-CN.md)
+- [Run evidence and reproducibility notes](docs/run_evidence.zh-CN.md)
+- [RL diagnostics](docs/rl_diagnostics.zh-CN.md)
+- [Artifact index](artifacts/README.md)
+
+## Reproduce Locally
+
+Local tests do not require model weights or API keys.
 
 ```bash
-bash scripts/remote/check_host.sh
+uv run pytest
 ```
 
-3. Bootstrap Python/training dependencies.
+LLM-judge and remote GRPO runs require private infrastructure. Copy
+`.env.example` to a private `.env` file and set keys locally.
 
-```bash
-bash scripts/remote/bootstrap_a10040g.sh
-```
+## Security Notes
 
-4. Generate a tiny seed dataset and verify the evaluator locally.
-
-```bash
-python scripts/data/make_seed_dataset.py --out data/seeds/critpt_seed.jsonl
-python scripts/eval/eval_jsonl.py --data data/seeds/critpt_seed.jsonl
-```
-
-5. Run the all-reduce smoke test on the GPU node.
-
-```bash
-torchrun --standalone --nproc_per_node=8 scripts/smoke/torch_all_reduce.py
-```
-
-6. Start with `Qwen3-14B` GRPO for the stable result, then try the guarded
-`Qwen3-32B` smoke config.
-
-```bash
-bash scripts/train/run_verl_grpo.sh configs/experiments/qwen3_14b_grpo_verl.env
-bash scripts/train/run_openrlhf_grpo_qwen3_32b_smoke.sh
-```
-
-## Hardware Policy
-
-- Stable result: `Qwen/Qwen3-14B` GRPO.
-- Stretch result: `Qwen/Qwen3-32B` QLoRA/GRPO smoke.
-- Avoid: full-parameter 32B PPO/GRPO on 8x A100 40G PCIe.
-- Keep checkpoints, models, and logs on `/data/sdb`, not `/`.
-
-## Remote Editing
-
-Use Git as the source of truth. The GPU machine can run hotfixes directly, but
-every code change must be committed and pushed back so nothing is lost when the
-instance is released.
-
-See [docs/current_node.md](docs/current_node.md) for the currently connected
-node facts.
+No API keys or passwords should be committed. Remote host names in public docs
+are represented with placeholders such as `<GPU_HOST>`. Full model weights,
+checkpoints, raw rollouts, and generated parquet data are intentionally ignored
+by Git.

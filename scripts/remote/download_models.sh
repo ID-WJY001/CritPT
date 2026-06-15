@@ -38,6 +38,12 @@ download_one() {
   local local_dir="${MODELS_DIR}/${slug}"
   mkdir -p "${local_dir}"
 
+  if [ -f "${local_dir}/config.json" ] && compgen -G "${local_dir}/*.safetensors" >/dev/null; then
+    echo "[download] exists ${local_dir}"
+    du -sh "${local_dir}" || true
+    return
+  fi
+
   echo "[download] start ${model_id}"
   echo "[download] log ${LOG_DIR}/download_${slug}.log"
 
@@ -59,6 +65,9 @@ PY
 }
 
 case "${TARGET}" in
+  qwen3-8b)
+    download_one qwen3-8b Qwen/Qwen3-8B
+    ;;
   qwen3-14b)
     download_one qwen3-14b Qwen/Qwen3-14B
     ;;
@@ -66,12 +75,13 @@ case "${TARGET}" in
     download_one qwen3-32b Qwen/Qwen3-32B
     ;;
   all)
+    download_one qwen3-8b Qwen/Qwen3-8B
     download_one qwen3-14b Qwen/Qwen3-14B
     download_one qwen3-32b Qwen/Qwen3-32B
     ;;
   *)
     echo "unknown target: ${TARGET}" >&2
-    echo "usage: bash scripts/remote/download_models.sh [qwen3-14b|qwen3-32b|all]" >&2
+    echo "usage: bash scripts/remote/download_models.sh [qwen3-8b|qwen3-14b|qwen3-32b|all]" >&2
     exit 2
     ;;
 esac

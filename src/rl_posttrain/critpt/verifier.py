@@ -5,6 +5,11 @@ import re
 from dataclasses import dataclass
 
 import sympy as sp
+from sympy.parsing.sympy_parser import (
+    implicit_multiplication_application,
+    parse_expr,
+    standard_transformations,
+)
 
 from rl_posttrain.critpt.schema import VerifierSpec
 
@@ -13,7 +18,10 @@ ANSWER_PATTERNS = [
     re.compile(r"<answer>\s*(.*?)\s*</answer>", re.DOTALL | re.IGNORECASE),
     re.compile(r"final\s+answer\s*[:：]\s*(.*)", re.DOTALL | re.IGNORECASE),
     re.compile(r"答案\s*[:：]\s*(.*)", re.DOTALL),
+    re.compile(r"\\boxed\s*\{(.*)\}\s*$", re.DOTALL),
 ]
+
+SYMPY_TRANSFORMATIONS = standard_transformations + (implicit_multiplication_application,)
 
 
 @dataclass(frozen=True)
@@ -57,7 +65,90 @@ def _safe_parse(expr: str, variables: list[str]) -> sp.Expr:
         "log": sp.log,
         "pi": sp.pi,
     }
-    return sp.sympify(expr.replace("^", "**"), locals=allowed)
+    return parse_expr(
+        _normalise_symbolic_expr(expr),
+        local_dict=allowed,
+        transformations=SYMPY_TRANSFORMATIONS,
+        evaluate=True,
+    )
+
+
+def _normalise_symbolic_expr(expr: str) -> str:
+    text = expr.strip()
+    text = _strip_math_wrappers(text)
+    text = _drop_left_hand_side(text)
+    text = _latex_frac_to_python(text)
+    replacements = {
+        "\\left": "",
+        "\\right": "",
+        "\\,": "",
+        "\\!": "",
+        "\\;": "",
+        "\\:": "",
+        "\\cdot": "*",
+        "\\times": "*",
+        "\\rm": "",
+        "{": "(",
+        "}": ")",
+        "^": "**",
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    text = re.sub(r"\\[a-zA-Z]+\s*\{([^{}]+)\}", r"\1", text)
+    text = re.sub(r"\s+", "", text)
+    return text
+
+
+def _strip_math_wrappers(text: str) -> str:
+    stripped = text.strip()
+    for prefix, suffix in (("$$", "$$"), ("\\[", "\\]"), ("$", "$")):
+        if stripped.startswith(prefix) and stripped.endswith(suffix):
+            return stripped[len(prefix) : -len(suffix)].strip()
+    boxed = re.fullmatch(r"\\boxed\s*\{(.+)\}", stripped, flags=re.DOTALL)
+    if boxed:
+        return boxed.group(1).strip()
+    return stripped
+
+
+def _drop_left_hand_side(text: str) -> str:
+    if "=" not in text:
+        return text
+    left, right = text.split("=", 1)
+    if re.search(r"[A-Za-z]\\|F|fidelity|logical|physical|rm", left):
+        return right.strip()
+    return text
+
+
+def _latex_frac_to_python(text: str) -> str:
+    for token in ("\\tfrac", "\\dfrac", "\\frac"):
+        while token in text:
+            start = text.find(token)
+            numerator_start = start + len(token)
+            numerator, numerator_end = _read_latex_group(text, numerator_start)
+            denominator, denominator_end = _read_latex_group(text, numerator_end)
+            if numerator is None or denominator is None:
+                break
+            converted = f"(({_latex_frac_to_python(numerator)})/({_latex_frac_to_python(denominator)}))"
+            text = text[:start] + converted + text[denominator_end:]
+    return text
+
+
+def _read_latex_group(text: str, start: int) -> tuple[str | None, int]:
+    pos = start
+    while pos < len(text) and text[pos].isspace():
+        pos += 1
+    if pos >= len(text) or text[pos] != "{":
+        return None, start
+    depth = 0
+    for idx in range(pos, len(text)):
+        char = text[idx]
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return text[pos + 1 : idx], idx + 1
+    return None, start
 
 
 def _verify_symbolic(extracted: str, spec: VerifierSpec) -> VerificationResult:
@@ -107,4 +198,3 @@ def _numeric_equivalence(got: sp.Expr, expected: sp.Expr, spec: VerifierSpec) ->
         ):
             return False
     return True
-
