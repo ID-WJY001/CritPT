@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CritPT Training Curves</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5e6b78;
+      --line: #d9dee7;
+      --accent: #146c94;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header .wrap {
+      padding: 28px 0 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 860px;
+    }
+
+    main {
+      padding: 24px 0 42px;
+    }
+
+    .note {
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    figcaption {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    figcaption strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    figcaption span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+
+    .links {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .links a {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>CritPT RL Training Curves</h1>
+      <p class="sub">本页集中展示仓库保留的 curated 训练曲线。原始 TensorBoard event 文件没有留存；这里展示的是从 metrics JSONL/CSV 画出的 reward、KL、entropy、clip、length 等训练诊断图。</p>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="note">
+      看训练是否正常，优先扫 reward 是否真的上升、KL 是否失控、entropy 是否塌掉、clip 是否过高、response length 是否被 reward 带偏。
+    </div>
+    <section class="grid">
+      <figure>
+        <figcaption>
+          <strong>E1 / E2 三次训练曲线</strong>
+          <span>对比 base、from-E1、E1 本身的 reward、advantage、KL、entropy、length 等核心 RL 走势。</span>
+        </figcaption>
+        <img src="e1_e2_three_runs_training_curves.svg" alt="E1 E2 three runs training curves">
+      </figure>
+      <figure>
+        <figcaption>
+          <strong>E1 / E2 reward 与 length 聚焦图</strong>
+          <span>专门看 reward 有没有上升，以及输出长度有没有被奖励函数异常牵引。</span>
+        </figcaption>
+        <img src="e1_e2_reward_length_focus.svg" alt="E1 E2 reward length focus">
+      </figure>
+      <figure>
+        <figcaption>
+          <strong>E3 实时训练曲线</strong>
+          <span>final-answer judge 方向的实时曲线快照，用来观察 judge 改动后的 reward 和长度反应。</span>
+        </figcaption>
+        <img src="e3_realtime_curves.svg" alt="E3 realtime curves">
+      </figure>
+      <figure>
+        <figcaption>
+          <strong>E4 训练曲线快照</strong>
+          <span>official-style 数据方向的实时训练图，保留为 PNG 截图。</span>
+        </figcaption>
+        <img src="e4_realtime_curves.png" alt="E4 realtime curves">
+      </figure>
+      <figure>
+        <figcaption>
+          <strong>V19 RL 训练 dashboard</strong>
+          <span>V 系列里更接近题型 based 训练阶段的一张核心诊断图。</span>
+        </figcaption>
+        <img src="v19_rl_training_dashboard.svg" alt="V19 RL training dashboard">
+      </figure>
+      <figure>
+        <figcaption>
+          <strong>V20 key metrics</strong>
+          <span>V20 阶段的关键指标图，适合和 V19 以及 E 系列对照看。</span>
+        </figcaption>
+        <img src="v20_metrics_key.svg" alt="V20 metrics key">
+      </figure>
+    </section>
+    <nav class="links" aria-label="Raw curated artifacts">
+      <a href="e3_realtime_summary.json">E3 summary JSON</a>
+      <a href="e2_base_official70_score.json">E2 official70 score JSON</a>
+      <a href="../README.md">Artifacts README</a>
+    </nav>
+  </main>
+</body>
+</html>
