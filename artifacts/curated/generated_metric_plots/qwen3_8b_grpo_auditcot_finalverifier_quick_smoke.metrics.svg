@@ -1,0 +1,437 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="3478" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<text x="24" y="28" font-size="18" font-weight="700">qwen3_8b_grpo_auditcot_finalverifier_quick_smoke.metrics.jsonl</text>
+<text x="24" y="48" font-size="12" fill="#64748b">rows=1 keys=18</text>
+<g transform="translate(0,58)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/score/mean</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.27</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.0633</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.397</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.73</text>
+<polyline points="92.0,93.0" fill="none" stroke="#2563eb" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.27 max=0.73 last=0.23</text>
+</g>
+<g transform="translate(0,248)">
+<text x="92" y="22" font-size="13" font-weight="700">timing_s/agent_loop/compute_score/mean</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">6.95</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">7.28</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">7.62</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">7.95</text>
+<polyline points="92.0,93.0" fill="none" stroke="#16a34a" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=6.949 max=7.949 last=7.449</text>
+</g>
+<g transform="translate(0,438)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/rewards/mean</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.27</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.0633</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.397</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.73</text>
+<polyline points="92.0,93.0" fill="none" stroke="#dc2626" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.27 max=0.73 last=0.23</text>
+</g>
+<g transform="translate(0,628)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/rewards/max</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.833</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">1.17</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">1.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#9333ea" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=0.5 max=1.5 last=1</text>
+</g>
+<g transform="translate(0,818)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/rewards/min</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.38</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.0467</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.287</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.62</text>
+<polyline points="92.0,93.0" fill="none" stroke="#ea580c" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.38 max=0.62 last=0.12</text>
+</g>
+<g transform="translate(0,1008)">
+<text x="92" y="22" font-size="13" font-weight="700">timing_s/reward</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.167</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#0891b2" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.5 max=0.5 last=1.278e-05</text>
+</g>
+<g transform="translate(0,1198)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/advantages/max</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">0.207</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.54</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.874</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">1.21</text>
+<polyline points="92.0,93.0" fill="none" stroke="#4f46e5" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=0.2071 max=1.207 last=0.7071</text>
+</g>
+<g transform="translate(0,1388)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/advantages/mean</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.167</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.166</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#be123c" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.5003 max=0.4997 last=-0.0003454</text>
+</g>
+<g transform="translate(0,1578)">
+<text x="92" y="22" font-size="13" font-weight="700">critic/advantages/min</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-1.21</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.874</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">-0.54</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">-0.207</text>
+<polyline points="92.0,93.0" fill="none" stroke="#2563eb" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-1.207 max=-0.2071 last=-0.7071</text>
+</g>
+<g transform="translate(0,1768)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/grad_norm</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">0.753</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">1.09</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">1.42</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">1.75</text>
+<polyline points="92.0,93.0" fill="none" stroke="#16a34a" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=0.7529 max=1.753 last=1.253</text>
+</g>
+<g transform="translate(0,1958)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/loss</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.166</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#dc2626" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.4997 max=0.5003 last=0.0003454</text>
+</g>
+<g transform="translate(0,2148)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/pg_loss</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.166</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#9333ea" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.4997 max=0.5003 last=0.0003454</text>
+</g>
+<g transform="translate(0,2338)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/entropy</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.21</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.124</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.457</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.79</text>
+<polyline points="92.0,93.0" fill="none" stroke="#ea580c" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.2097 max=0.7903 last=0.2903</text>
+</g>
+<g transform="translate(0,2528)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/ppo_kl</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.167</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#0891b2" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.5 max=0.5 last=0</text>
+</g>
+<g transform="translate(0,2718)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/pg_clipfrac</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.167</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#4f46e5" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.5 max=0.5 last=0</text>
+</g>
+<g transform="translate(0,2908)">
+<text x="92" y="22" font-size="13" font-weight="700">actor/pg_clipfrac_lower</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">-0.5</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">-0.167</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">0.167</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">0.5</text>
+<polyline points="92.0,93.0" fill="none" stroke="#be123c" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=-0.5 max=0.5 last=0</text>
+</g>
+<g transform="translate(0,3098)">
+<text x="92" y="22" font-size="13" font-weight="700">response_length/clip_ratio</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">0.375</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">0.708</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">1.04</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">1.38</text>
+<polyline points="92.0,93.0" fill="none" stroke="#2563eb" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=0.375 max=1.375 last=0.875</text>
+</g>
+<g transform="translate(0,3288)">
+<text x="92" y="22" font-size="13" font-weight="700">response_length/max</text>
+<rect x="92" y="42" width="860" height="102" fill="#fafafa" stroke="#e2e8f0"/>
+<line x1="92.0" y1="42" x2="92.0" y2="144" stroke="#e5e7eb"/>
+<text x="92.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1</text>
+<line x1="307.0" y1="42" x2="307.0" y2="144" stroke="#e5e7eb"/>
+<text x="307.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.25</text>
+<line x1="522.0" y1="42" x2="522.0" y2="144" stroke="#e5e7eb"/>
+<text x="522.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.5</text>
+<line x1="737.0" y1="42" x2="737.0" y2="144" stroke="#e5e7eb"/>
+<text x="737.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">1.75</text>
+<line x1="952.0" y1="42" x2="952.0" y2="144" stroke="#e5e7eb"/>
+<text x="952.0" y="162" text-anchor="middle" font-size="10" fill="#64748b">2</text>
+<line x1="92" y1="144.0" x2="952" y2="144.0" stroke="#e5e7eb"/>
+<text x="84" y="148.0" text-anchor="end" font-size="10" fill="#64748b">512</text>
+<line x1="92" y1="110.0" x2="952" y2="110.0" stroke="#e5e7eb"/>
+<text x="84" y="114.0" text-anchor="end" font-size="10" fill="#64748b">512</text>
+<line x1="92" y1="76.0" x2="952" y2="76.0" stroke="#e5e7eb"/>
+<text x="84" y="80.0" text-anchor="end" font-size="10" fill="#64748b">512</text>
+<line x1="92" y1="42.0" x2="952" y2="42.0" stroke="#e5e7eb"/>
+<text x="84" y="46.0" text-anchor="end" font-size="10" fill="#64748b">512</text>
+<polyline points="92.0,93.0" fill="none" stroke="#16a34a" stroke-width="2"/>
+<text x="952" y="22" text-anchor="end" font-size="11" fill="#64748b">min=511.5 max=512.5 last=512</text>
+</g>
+</svg>

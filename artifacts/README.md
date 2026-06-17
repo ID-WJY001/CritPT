@@ -6,10 +6,15 @@ dumps, generated JSON, logs, and remote paths.
 This directory keeps only small curated evidence files under
 `artifacts/curated/`.
 
+`curated/full_dashboard.html` is the broadest public curve view. It combines
+hand-picked figures with SVG plots regenerated from retained local metrics.
+
 ## Selected Files
 
 | File | Meaning |
 | --- | --- |
+| `curated/full_dashboard.html` | Public full metrics dashboard |
+| `curated/generated_metric_plots/` | Auto-generated SVG curves from retained metrics |
 | `curated/e1_e2_three_runs_training_curves.svg` | E1/E2 training curves across three runs |
 | `curated/e1_e2_reward_length_focus.svg` | E1/E2 reward and response length focus plot |
 | `curated/e3_realtime_curves.svg` | E3 strict final-answer judge realtime curves |

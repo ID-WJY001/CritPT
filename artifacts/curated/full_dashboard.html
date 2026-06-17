@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CritPT Full Curated Metrics Dashboard</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5d6875;
+      --line: #d8dee8;
+      --accent: #0f6f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.5; }
+    header { position: sticky; top: 0; z-index: 2; background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(10px); }
+    .wrap { width: min(1240px, calc(100% - 32px)); margin: 0 auto; }
+    header .wrap { padding: 22px 0 16px; }
+    h1 { margin: 0; font-size: 27px; letter-spacing: 0; }
+    .sub { margin: 7px 0 0; color: var(--muted); max-width: 980px; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    nav a { color: var(--accent); text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 7px 10px; font-size: 14px; }
+    main { padding: 24px 0 44px; }
+    .note { padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--muted); margin-bottom: 18px; }
+    section { margin-bottom: 30px; }
+    h2 { margin: 0 0 12px; font-size: 20px; letter-spacing: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; }
+    figure { margin: 0; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; overflow: hidden; }
+    figcaption { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    figcaption strong { display: block; font-size: 15px; overflow-wrap: anywhere; }
+    figcaption span { display: block; margin-top: 3px; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+    img { display: block; width: 100%; height: auto; min-height: 180px; background: #fff; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>CritPT Full Curated Metrics Dashboard</h1>
+      <p class="sub">这是适合公开仓库的完整曲线展示页：包含手动精选图，以及从本地 retained metrics CSV/JSONL 自动补画出来的 46 张 SVG。没有提交远端 checkpoint、TensorBoard event、完整 rollout dump。</p>
+      <nav>
+        <a href="#curated">精选曲线</a>
+        <a href="#auto-generated">自动补画曲线</a>
+        <a href="index.html">简版 dashboard</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="note">如果图里看到 PPO / ppo 字样，不代表算法切成了 PPO。verl 的入口和若干字段沿用了 PPO 命名，例如 <code>main_ppo</code>、<code>ppo_mini_batch_size</code>、<code>actor/pg_clipfrac</code>。本项目实际配置使用 <code>algorithm.adv_estimator=grpo</code>；这些 PPO 字段主要记录 clipped policy-gradient 更新强度。</div>
+    <div class="note">公开仓库中这页是证据展示，不是完整可审计训练归档。完整 TensorBoard events、checkpoint、远端日志如果还存在，应在远端机器上；当前公开版本只包含小体积曲线和摘要。</div>
+
+    <section id="curated">
+      <h2>精选曲线</h2>
+      <div class="grid">
+      <figure>
+        <figcaption><strong>E1 / E2 三次训练曲线</strong><span>手动精选：reward、advantage、KL、entropy、clip、length 的三跑对比。</span></figcaption>
+        <img src="e1_e2_three_runs_training_curves.svg" alt="E1 / E2 三次训练曲线">
+      </figure>
+      <figure>
+        <figcaption><strong>E1 / E2 reward-length 聚焦图</strong><span>手动精选：重点看 reward 和输出长度是否一起异常变化。</span></figcaption>
+        <img src="e1_e2_reward_length_focus.svg" alt="E1 / E2 reward-length 聚焦图">
+      </figure>
+      <figure>
+        <figcaption><strong>E3 实时曲线</strong><span>final-answer judge 改动后的实时训练快照。</span></figcaption>
+        <img src="e3_realtime_curves.svg" alt="E3 实时曲线">
+      </figure>
+      <figure>
+        <figcaption><strong>E4 实时曲线</strong><span>official-style 数据方向的训练快照。</span></figcaption>
+        <img src="e4_realtime_curves.png" alt="E4 实时曲线">
+      </figure>
+      <figure>
+        <figcaption><strong>V19 RL dashboard</strong><span>题型 based / failure-mined 阶段的核心诊断图。</span></figcaption>
+        <img src="v19_rl_training_dashboard.svg" alt="V19 RL dashboard">
+      </figure>
+      <figure>
+        <figcaption><strong>V20 key metrics</strong><span>focused hardcases 阶段的关键指标。</span></figcaption>
+        <img src="v20_metrics_key.svg" alt="V20 key metrics">
+      </figure>
+      </div>
+    </section>
+
+    <section id="auto-generated">
+      <h2>自动补画曲线</h2>
+      <div class="grid">
+      <figure>
+        <figcaption><strong>e1 / metrics.step60</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e1__metrics.step60.svg" alt="e1 / metrics.step60">
+      </figure>
+      <figure>
+        <figcaption><strong>e1 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e1__metrics.svg" alt="e1 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>e2 curves / metrics / qwen3 8b grpo e1 yunwu semantic judge.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e2_curves__metrics__qwen3_8b_grpo_e1_yunwu_semantic_judge.metrics.svg" alt="e2 curves / metrics / qwen3 8b grpo e1 yunwu semantic judge.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>e2 curves / metrics / qwen3 8b grpo e2 yunwu semantic judge base.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e2_curves__metrics__qwen3_8b_grpo_e2_yunwu_semantic_judge_base.metrics.svg" alt="e2 curves / metrics / qwen3 8b grpo e2 yunwu semantic judge base.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>e2 curves / metrics / qwen3 8b grpo e2 yunwu semantic judge from e1.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e2_curves__metrics__qwen3_8b_grpo_e2_yunwu_semantic_judge_from_e1.metrics.svg" alt="e2 curves / metrics / qwen3 8b grpo e2 yunwu semantic judge from e1.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>e3 final answer judge / qwen3 8b grpo e3 yunwu final answer judge from e2 base.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/e3_final_answer_judge__qwen3_8b_grpo_e3_yunwu_final_answer_judge_from_e2_base.metrics.svg" alt="e3 final answer judge / qwen3 8b grpo e3 yunwu final answer judge from e2 base.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditcot finalverifier b8 obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditcot_finalverifier_b8_obs10__metrics.svg" alt="experiments / qwen3 8b grpo auditcot finalverifier b8 obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditcot finalverifier v5 continue b8 obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditcot_finalverifier_v5_continue_b8_obs10__metrics.svg" alt="experiments / qwen3 8b grpo auditcot finalverifier v5 continue b8 obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditcot finalverifier v6 hardcase b8 obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditcot_finalverifier_v6_hardcase_b8_obs10__metrics.svg" alt="experiments / qwen3 8b grpo auditcot finalverifier v6 hardcase b8 obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditcot finalverifier v6 hardcase b8 obs10 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditcot_finalverifier_v6_hardcase_b8_obs10__metrics_key.svg" alt="experiments / qwen3 8b grpo auditcot finalverifier v6 hardcase b8 obs10 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditcot finalverifier v7 intermediate b8 obs10 / qwen3 8b grpo auditcot finalverifier v7 intermediate b8 obs10.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditcot_finalverifier_v7_intermediate_b8_obs10__qwen3_8b_grpo_auditcot_finalverifier_v7_intermediate_b8_obs10.metrics.svg" alt="experiments / qwen3 8b grpo auditcot finalverifier v7 intermediate b8 obs10 / qwen3 8b grpo auditcot finalverifier v7 intermediate b8 obs10.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v7_compact_b8_obs10__metrics.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v7_compact_b8_obs10__metrics_all.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v7_compact_b8_obs10__metrics_key.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v7 compact b8 obs10 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v8_dense_n4_b8_obs5__metrics.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v8_dense_n4_b8_obs5__metrics_all.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_auditshort_finalverifier_v8_dense_n4_b8_obs5__metrics_key.svg" alt="experiments / qwen3 8b grpo auditshort finalverifier v8 dense n4 b8 obs5 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v10_curriculum_n4_b8_obs5__metrics.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v10_curriculum_n4_b8_obs5__metrics_all.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v10_curriculum_n4_b8_obs5__metrics_key.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v10 curriculum n4 b8 obs5 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v11 template n4 b8 obs5 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v11_template_n4_b8_obs5__metrics.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v11 template n4 b8 obs5 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v11 template n4 b8 obs5 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v11_template_n4_b8_obs5__metrics_key.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v11 template n4 b8 obs5 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v9_trace_n4_b8_obs5__metrics.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v9_trace_n4_b8_obs5__metrics_all.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_audittrace_finalverifier_v9_trace_n4_b8_obs5__metrics_key.svg" alt="experiments / qwen3 8b grpo audittrace finalverifier v9 trace n4 b8 obs5 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics.raw</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_compactcot_strict_obs10__metrics.raw.svg" alt="experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics.raw">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_compactcot_strict_obs10__metrics.svg" alt="experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_compactcot_strict_obs10__metrics_all.svg" alt="experiments / qwen3 8b grpo model judge compactcot strict obs10 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge cot1536 obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_cot1536_obs10__metrics.svg" alt="experiments / qwen3 8b grpo model judge cot1536 obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge cot1536 obs10 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_cot1536_obs10__metrics_all.svg" alt="experiments / qwen3 8b grpo model judge cot1536 obs10 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge cot2048 obs20 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_cot2048_obs20__metrics.svg" alt="experiments / qwen3 8b grpo model judge cot2048 obs20 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge cot2048 obs20 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_cot2048_obs20__metrics_all.svg" alt="experiments / qwen3 8b grpo model judge cot2048 obs20 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge obs10 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_obs10__metrics.svg" alt="experiments / qwen3 8b grpo model judge obs10 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo model judge obs10 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_model_judge_obs10__metrics_all.svg" alt="experiments / qwen3 8b grpo model judge obs10 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v13 official code format signal n4 / metrics all</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v13_official_code_format_signal_n4__metrics_all.svg" alt="experiments / qwen3 8b grpo v13 official code format signal n4 / metrics all">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v13 official code format signal n4 / metrics auto key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v13_official_code_format_signal_n4__metrics_auto_key.svg" alt="experiments / qwen3 8b grpo v13 official code format signal n4 / metrics auto key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v13 official code format signal n4 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v13_official_code_format_signal_n4__metrics_key.svg" alt="experiments / qwen3 8b grpo v13 official code format signal n4 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v13 official code format signal n4 / qwen3 8b grpo v13 official code format signal n4.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v13_official_code_format_signal_n4__qwen3_8b_grpo_v13_official_code_format_signal_n4.metrics.svg" alt="experiments / qwen3 8b grpo v13 official code format signal n4 / qwen3 8b grpo v13 official code format signal n4.metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v14 compact exec n4 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v14_compact_exec_n4__metrics.svg" alt="experiments / qwen3 8b grpo v14 compact exec n4 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v14 compact exec n4 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v14_compact_exec_n4__metrics_key.svg" alt="experiments / qwen3 8b grpo v14 compact exec n4 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v14 compact exec n4 step80 / metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v14_compact_exec_n4_step80__metrics.svg" alt="experiments / qwen3 8b grpo v14 compact exec n4 step80 / metrics">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v14 compact exec n4 step80 / metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v14_compact_exec_n4_step80__metrics_key.svg" alt="experiments / qwen3 8b grpo v14 compact exec n4 step80 / metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v18 official long from v17 gs60 n8 / v18 metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v18_official_long_from_v17_gs60_n8__v18_metrics_key.svg" alt="experiments / qwen3 8b grpo v18 official long from v17 gs60 n8 / v18 metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v19 failure mined from v18 gs80 n8 / v19 metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v19_failure_mined_from_v18_gs80_n8__v19_metrics_key.svg" alt="experiments / qwen3 8b grpo v19 failure mined from v18 gs80 n8 / v19 metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>experiments / qwen3 8b grpo v20 focused hard from v19 gs60 n8 / v20 metrics key</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/experiments__qwen3_8b_grpo_v20_focused_hard_from_v19_gs60_n8__v20_metrics_key.svg" alt="experiments / qwen3 8b grpo v20 focused hard from v19 gs60 n8 / v20 metrics key">
+      </figure>
+      <figure>
+        <figcaption><strong>qwen3 8b grpo auditcot finalverifier quick smoke.metrics</strong><span>auto-generated from retained local metrics CSV/JSONL</span></figcaption>
+        <img src="generated_metric_plots/qwen3_8b_grpo_auditcot_finalverifier_quick_smoke.metrics.svg" alt="qwen3 8b grpo auditcot finalverifier quick smoke.metrics">
+      </figure>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
