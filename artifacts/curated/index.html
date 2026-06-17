@@ -135,6 +135,9 @@
     <div class="note">
       看训练是否正常，优先扫 reward 是否真的上升、KL 是否失控、entropy 是否塌掉、clip 是否过高、response length 是否被 reward 带偏。
     </div>
+    <div class="note">
+      图里如果看到 PPO / ppo 字样，不代表实验算法切成了 PPO。verl 的 GRPO 训练入口和若干字段沿用了 PPO 命名，例如 <code>main_ppo</code>、<code>ppo_mini_batch_size</code>、<code>actor/pg_clipfrac</code>。本项目实际配置使用的是 <code>algorithm.adv_estimator=grpo</code>；这些 PPO 字段主要是在记录 clipped policy-gradient 更新强度。
+    </div>
     <section class="grid">
       <figure>
         <figcaption>
